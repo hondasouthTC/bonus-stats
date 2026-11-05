@@ -85,7 +85,7 @@ main{padding:14px 16px 96px}
 .btn-primary:active{background:var(--red-dk)}
 
 /* record card */
-.rec{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px 11px;margin-bottom:10px;box-shadow:var(--shadow)}
+.rec{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px 8px;margin-bottom:10px;box-shadow:var(--shadow)}
 .rec-hd{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
 .rec-model{font-size:15px;font-weight:700;letter-spacing:.01em}
 .rec-sub{font-size:12px;color:var(--ink2);margin-top:3px;display:flex;flex-wrap:wrap;gap:0 6px}
@@ -99,9 +99,9 @@ main{padding:14px 16px 96px}
 .n-hd{display:block;font-size:10.5px;color:var(--ink3);margin-bottom:1px}
 .n-v{font-size:13.5px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
 .n-v.pos{color:var(--green)} .n-v.neg{color:var(--red)}
-.rec-tail{display:flex;align-items:center;justify-content:space-between;margin-top:9px;padding-top:8px;border-top:1px solid var(--line2)}
-.rec-tail .t{font-size:11px;color:var(--ink3)}
-.tgl{background:none;border:0;color:var(--red);font-size:11.5px;font-weight:700;padding:4px 2px;cursor:pointer;display:flex;align-items:center;gap:3px}
+.rec-tail{display:flex;align-items:center;justify-content:space-between;margin-top:2px;padding-top:0;border-top:0;min-height:22px}
+.rec-tail .t{font-size:10.5px;color:var(--ink3);margin-right:auto}
+.tgl{background:none;border:0;color:var(--red);font-size:11px;font-weight:700;padding:3px 0 3px 6px;cursor:pointer;display:flex;align-items:center;gap:3px}
 .tgl svg{width:12px;height:12px;stroke:currentColor;fill:none;stroke-width:2.2;stroke-linecap:round;transition:transform .18s}
 .rec.open .tgl svg{transform:rotate(180deg)}
 .rec-body{display:none;margin-top:9px;padding-top:9px;border-top:1px dashed var(--line2)}
@@ -125,7 +125,7 @@ main{padding:14px 16px 96px}
 /* summary */
 .kpis{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .kpi{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow)}
-.kpi span{display:block;font-size:11px;color:var(--ink3);margin-bottom:3px;letter-spacing:.03em}
+.kpi > span{display:block;font-size:11px;color:var(--ink3);margin-bottom:3px;letter-spacing:.03em}
 .kpi b{font-size:19px;font-weight:700;font-variant-numeric:tabular-nums;letter-spacing:-.02em}
 .kpi b.pos{color:var(--green)} .kpi b.neg{color:var(--red)}
 .kpi.wide{grid-column:span 2;display:flex;align-items:center;justify-content:space-between;gap:10px}
@@ -168,7 +168,7 @@ main{padding:14px 16px 96px}
 .row{display:grid;grid-template-columns:1fr 122px;align-items:center;gap:10px;padding:8px 0;border-bottom:1px dashed var(--line2)}
 .row:last-child{border-bottom:0}
 .row label{font-size:13px;color:#3A3E45}
-.row.stack{grid-template-columns:1fr;gap:5px}
+.row.stack{grid-template-columns:1fr;gap:5px;border-bottom:0;padding:6px 0}
 .row.stack label{font-size:11.5px;color:var(--ink3)}
 input.money,input.txt,select.sel{
   width:100%;height:37px;border:1px solid var(--line);border-radius:9px;padding:0 9px;font-size:14px;
@@ -225,7 +225,7 @@ input:focus,select:focus{outline:none;border-color:var(--red);background:#fff;bo
     </div>
     <nav class="tabs" id="tabs">
       <button data-view="detail" class="on">
-        <svg viewBox="0 0 24 24"><path d="M3 17h2m14 0h2"/><path d="M5 17V9l2-4h10l2 4v8"/><circle cx="8" cy="17" r="1.6"/><circle cx="16" cy="17" r="1.6"/></svg>
+        <svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11"/><path d="M4.5 6h.01M4.5 12h.01M4.5 18h.01"/></svg>
         車輛明細
       </button>
       <button data-view="summary">
@@ -306,7 +306,7 @@ input:focus,select:focus{outline:none;border-color:var(--red);background:#fff;bo
 
 <div class="toast" id="toast"></div>
 <script>
-window.APP_VERSION = '1.0.0';
+window.APP_VERSION = '1.0.1';
 const KEY='hondaStats.v1', SKEY='hondaStats.staff';
 const MODELS=['HRV S','HRV ES','HRV EP','HRV 汽油','CRV VTIS','CRV S','CRV ES','CRV EP','FIT HOME','FIT eHEV','CIVIC','ZR-V','PRELUDE','其他'];
 const STATUSES=['訂車','已配','已領','已交','其他'];
@@ -420,9 +420,8 @@ function renderList(){
       <div class="ic"><svg viewBox="0 0 24 24"><path d="M3 17h2m14 0h2"/><path d="M5 17V9l2-4h10l2 4v8"/><circle cx="8" cy="17" r="1.6"/><circle cx="16" cy="17" r="1.6"/></svg></div>
       <h3>還沒有任何車輛</h3>
       <p>登錄一台車就會自動算出籌碼、支出與差異。<br>已經有 Google 試算表的資料，可直接匯入。</p>
-      <div class="row2"><button class="btn red" id="eAdd">＋ 新增車輛</button><button class="btn" id="eImp">匯入 CSV</button></div>
+      <div class="row2"><button class="btn" id="eImp">匯入 Google 試算表 CSV</button></div>
     </div>`;
-    $('#eAdd').onclick=()=>openForm();
     $('#eImp').onclick=()=>$('#fileCsv').click();
     return;
   }
@@ -489,12 +488,12 @@ function buildForm(r){
   const cust=[0,1,2,3,4].map(i=>(rec.cust&&rec.cust[i])||{n:'',a:0});
   let h='';
   h+=`<div class="grp"><div class="grp-hd"><span>基本資料</span></div><div class="grp-bd">
-    <div class="pair" style="grid-template-columns:1fr"><input class="txt" id="bStaff" placeholder="業務員姓名" value="${esc(rec.staff||'')}"></div>
-    <div class="pair" style="grid-template-columns:1fr"><input class="txt" id="bMonth" type="month" value="${esc(rec.month||'')}"></div>
-    <div class="pair" style="grid-template-columns:1fr"><select class="sel" id="bModel"><option value="">選擇車款</option>${MODELS.map(m=>`<option ${rec.model===m?'selected':''}>${m}</option>`).join('')}</select></div>
-    <div class="pair" style="grid-template-columns:1fr"><input class="txt" id="bColor" placeholder="顏色規格" value="${esc(rec.color||'')}"></div>
-    <div class="pair" style="grid-template-columns:1fr"><input class="txt" id="bCust" placeholder="客戶姓名" value="${esc(rec.customer||'')}"></div>
-    <div class="pair" style="grid-template-columns:1fr"><select class="sel" id="bStatus">${STATUSES.map(s=>`<option ${rec.status===s?'selected':''}>${s}</option>`).join('')}</select></div>
+    <div class="row stack"><label>業務員</label><input class="txt" id="bStaff" placeholder="姓名" value="${esc(rec.staff||'')}"></div>
+    <div class="row stack"><label>月份</label><input class="txt" id="bMonth" type="month" value="${esc(rec.month||'')}"></div>
+    <div class="row stack"><label>車款</label><select class="sel" id="bModel"><option value="">選擇車款</option>${MODELS.map(m=>`<option ${rec.model===m?'selected':''}>${m}</option>`).join('')}</select></div>
+    <div class="row stack"><label>顏色規格</label><input class="txt" id="bColor" placeholder="例：白、水泥灰" value="${esc(rec.color||'')}"></div>
+    <div class="row stack"><label>客戶姓名</label><input class="txt" id="bCust" placeholder="客戶或公司名稱" value="${esc(rec.customer||'')}"></div>
+    <div class="row stack"><label>狀態</label><select class="sel" id="bStatus">${STATUSES.map(s=>`<option ${rec.status===s?'selected':''}>${s}</option>`).join('')}</select></div>
   </div></div>`;
   h+=`<div class="grp"><div class="grp-hd"><span>籌碼收入</span><em id="sumChip">0</em></div><div class="grp-bd">`;
   CHIP_DEFS.forEach(([l,k])=>h+=field(l,k,chips[k],'chip'));
