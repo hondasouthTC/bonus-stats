@@ -26,7 +26,7 @@ function doGet(e) {
   const cb = p.callback || '';
   let out;
   try {
-    out = { ok: true, at: new Date().toISOString(), data: readBlob() };
+    out = { ok: true, at: new Date().toISOString(), data: parseBlob(readBlob()) };
   } catch (err) {
     out = { ok: false, error: String(err) };
   }
