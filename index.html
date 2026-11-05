@@ -275,7 +275,35 @@ input:focus,select:focus{outline:none;border-color:var(--red);background:#fff;bo
   </header>
   <div class="sheet-body">
     <div class="grp">
-      <div class="grp-hd"><span>匯入</span></div>
+      <div class="grp-hd"><span>跨裝置同步</span></div>
+      <div class="grp-bd" style="padding:12px 14px">
+        <p class="note" style="padding:0 0 10px">資料只存在這台裝置的瀏覽器裡。要搬到另一支手機或電腦，用下面的同步連結或雲端同步。</p>
+        <div style="display:flex;gap:8px;margin-bottom:8px">
+          <button class="btn" style="flex:1" id="btnLink">產生同步連結</button>
+          <button class="btn" style="flex:1" id="btnPaste">貼上連結匯入</button>
+        </div>
+        <div id="linkBox" class="hide" style="margin-top:10px">
+          <textarea id="linkOut" readonly style="width:100%;height:74px;border:1px solid var(--line);border-radius:9px;padding:8px;font-size:11px;background:#FDFCFA;color:var(--ink2);resize:none" spellcheck="false"></textarea>
+          <div style="display:flex;gap:8px;margin-top:8px">
+            <button class="btn" style="flex:1" id="btnCopyLink">複製</button>
+            <button class="btn" style="flex:1" id="btnShareLink">分享</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="grp">
+      <div class="grp-hd"><span>雲端同步（Google 試算表）</span></div>
+      <div class="grp-bd" style="padding:12px 14px">
+        <input class="txt" id="syncUrl" placeholder="貼上 Apps Script 網址（/exec 結尾）" style="width:100%;height:37px;border:1px solid var(--line);border-radius:9px;padding:0 9px;font-size:12px;background:#FDFCFA">
+        <div style="display:flex;gap:8px;margin-top:8px">
+          <button class="btn" style="flex:1" id="btnCloudUp">立即同步</button>
+          <button class="btn" style="flex:1" id="btnCloudDown">僅下載</button>
+        </div>
+        <div id="cloudState" class="note" style="padding:8px 0 0">尚未設定</div>
+      </div>
+    </div>
+    <div class="grp">
+      <div class="grp-hd"><span>檔案匯入</span></div>
       <div class="grp-bd" style="padding:12px 14px">
         <p class="note" style="padding:0 0 12px">可匯入 Google 試算表的 CSV（欄位名稱需與原本相同），重複的時間戳記會自動略過。</p>
         <input type="file" id="fileCsv" accept=".csv,text/csv" class="hide">
@@ -287,7 +315,7 @@ input:focus,select:focus{outline:none;border-color:var(--red);background:#fff;bo
       </div>
     </div>
     <div class="grp">
-      <div class="grp-hd"><span>匯出</span></div>
+      <div class="grp-hd"><span>檔案匯出</span></div>
       <div class="grp-bd" style="padding:12px 14px">
         <div style="display:flex;gap:8px">
           <button class="btn" style="flex:1" id="btnExpCsv">匯出 CSV</button>
@@ -306,7 +334,11 @@ input:focus,select:focus{outline:none;border-color:var(--red);background:#fff;bo
 
 <div class="toast" id="toast"></div>
 <script>
-window.APP_VERSION = '1.0.1';
+/* lz-string (MIT) */
+var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",n="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$",e={};function t(r,o){if(!e[r]){e[r]={};for(var n=0;n<r.length;n++)e[r][r.charAt(n)]=n}return e[r][o]}var i={compressToBase64:function(r){if(null==r)return"";var n=i._compress(r,6,function(r){return o.charAt(r)});switch(n.length%4){default:case 0:return n;case 1:return n+"===";case 2:return n+"==";case 3:return n+"="}},decompressFromBase64:function(r){return null==r?"":""==r?null:i._decompress(r.length,32,function(n){return t(o,r.charAt(n))})},compressToUTF16:function(o){return null==o?"":i._compress(o,15,function(o){return r(o+32)})+" "},decompressFromUTF16:function(r){return null==r?"":""==r?null:i._decompress(r.length,16384,function(o){return r.charCodeAt(o)-32})},compressToUint8Array:function(r){for(var o=i.compress(r),n=new Uint8Array(2*o.length),e=0,t=o.length;e<t;e++){var s=o.charCodeAt(e);n[2*e]=s>>>8,n[2*e+1]=s%256}return n},decompressFromUint8Array:function(o){if(null==o)return i.decompress(o);for(var n=new Array(o.length/2),e=0,t=n.length;e<t;e++)n[e]=256*o[2*e]+o[2*e+1];var s=[];return n.forEach(function(o){s.push(r(o))}),i.decompress(s.join(""))},compressToEncodedURIComponent:function(r){return null==r?"":i._compress(r,6,function(r){return n.charAt(r)})},decompressFromEncodedURIComponent:function(r){return null==r?"":""==r?null:(r=r.replace(/ /g,"+"),i._decompress(r.length,32,function(o){return t(n,r.charAt(o))}))},compress:function(o){return i._compress(o,16,function(o){return r(o)})},_compress:function(r,o,n){if(null==r)return"";var e,t,i,s={},u={},a="",p="",c="",l=2,f=3,h=2,d=[],m=0,v=0;for(i=0;i<r.length;i+=1)if(a=r.charAt(i),Object.prototype.hasOwnProperty.call(s,a)||(s[a]=f++,u[a]=!0),p=c+a,Object.prototype.hasOwnProperty.call(s,p))c=p;else{if(Object.prototype.hasOwnProperty.call(u,c)){if(c.charCodeAt(0)<256){for(e=0;e<h;e++)m<<=1,v==o-1?(v=0,d.push(n(m)),m=0):v++;for(t=c.charCodeAt(0),e=0;e<8;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}else{for(t=1,e=0;e<h;e++)m=m<<1|t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t=0;for(t=c.charCodeAt(0),e=0;e<16;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}0==--l&&(l=Math.pow(2,h),h++),delete u[c]}else for(t=s[c],e=0;e<h;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1;0==--l&&(l=Math.pow(2,h),h++),s[p]=f++,c=String(a)}if(""!==c){if(Object.prototype.hasOwnProperty.call(u,c)){if(c.charCodeAt(0)<256){for(e=0;e<h;e++)m<<=1,v==o-1?(v=0,d.push(n(m)),m=0):v++;for(t=c.charCodeAt(0),e=0;e<8;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}else{for(t=1,e=0;e<h;e++)m=m<<1|t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t=0;for(t=c.charCodeAt(0),e=0;e<16;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}0==--l&&(l=Math.pow(2,h),h++),delete u[c]}else for(t=s[c],e=0;e<h;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1;0==--l&&(l=Math.pow(2,h),h++)}for(t=2,e=0;e<h;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1;for(;;){if(m<<=1,v==o-1){d.push(n(m));break}v++}return d.join("")},decompress:function(r){return null==r?"":""==r?null:i._decompress(r.length,32768,function(o){return r.charCodeAt(o)})},_decompress:function(o,n,e){var t,i,s,u,a,p,c,l=[],f=4,h=4,d=3,m="",v=[],g={val:e(0),position:n,index:1};for(t=0;t<3;t+=1)l[t]=t;for(s=0,a=Math.pow(2,2),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;switch(s){case 0:for(s=0,a=Math.pow(2,8),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;c=r(s);break;case 1:for(s=0,a=Math.pow(2,16),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;c=r(s);break;case 2:return""}for(l[3]=c,i=c,v.push(c);;){if(g.index>o)return"";for(s=0,a=Math.pow(2,d),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;switch(c=s){case 0:for(s=0,a=Math.pow(2,8),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;l[h++]=r(s),c=h-1,f--;break;case 1:for(s=0,a=Math.pow(2,16),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;l[h++]=r(s),c=h-1,f--;break;case 2:return v.join("")}if(0==f&&(f=Math.pow(2,d),d++),l[c])m=l[c];else{if(c!==h)return null;m=i+i.charAt(0)}v.push(m),l[h++]=i+m.charAt(0),i=m,0==--f&&(f=Math.pow(2,d),d++)}}};return i}();"function"==typeof define&&define.amd?define(function(){return LZString}):"undefined"!=typeof module&&null!=module?module.exports=LZString:"undefined"!=typeof angular&&null!=angular&&angular.module("LZString",[]).factory("LZString",function(){return LZString});
+</script>
+<script>
+window.APP_VERSION = '1.1.0';
 const KEY='hondaStats.v1', SKEY='hondaStats.staff';
 const MODELS=['HRV S','HRV ES','HRV EP','HRV 汽油','CRV VTIS','CRV S','CRV ES','CRV EP','FIT HOME','FIT eHEV','CIVIC','ZR-V','PRELUDE','其他'];
 const STATUSES=['訂車','已配','已領','已交','其他'];
@@ -332,7 +364,7 @@ function load(){
   try{const raw=localStorage.getItem(KEY);if(raw){const d=JSON.parse(raw);if(d&&Array.isArray(d.records))DB=d}}catch(e){}
   flt.staff=localStorage.getItem(SKEY)||'';
 }
-function save(){localStorage.setItem(KEY,JSON.stringify(DB))}
+function save(){localStorage.setItem(KEY,JSON.stringify(DB));localStorage.setItem(KEY+'.at',String(Date.now()));if(typeof schedulePush==='function')schedulePush()}
 function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('on');clearTimeout(t._h);t._h=setTimeout(()=>t.classList.remove('on'),1900)}
 
 function calc(r){
@@ -585,10 +617,10 @@ function saveForm(){
   if(!d.staff){toast('請填業務員姓名');return}
   if(!d.model){toast('請選擇車款');return}
   if(editing){
-    Object.assign(editing,d,{});
+    Object.assign(editing,d,{upd:Date.now()});
     toast('已更新');
   }else{
-    const rec=Object.assign({id:uid(),ts:Date.now()},d);
+    const rec=Object.assign({id:uid(),ts:Date.now(),upd:Date.now()},d);
     DB.records.push(rec);
     toast('已新增 1 台');
   }
@@ -715,11 +747,116 @@ function importJson(text){
 }
 
 /* ---------- inject ---------- */
+/* ---------- 跨裝置同步 ---------- */
+const SYNCURL_KEY='hondaStats.syncUrl';
+let pushTimer=null;
+
+function encodeRecords(recs){
+  try{return LZString.compressToEncodedURIComponent(JSON.stringify({v:1,t:Date.now(),records:recs}))}
+  catch(e){return ''}
+}
+function decodeRecords(str){
+  try{
+    const d=JSON.parse(LZString.decompressFromEncodedURIComponent(str)||'null');
+    if(!d)return null;
+    return Array.isArray(d)?d:(d.records||null);
+  }catch(e){return null}
+}
+function mergeRecords(incoming,srcLabel){
+  if(!Array.isArray(incoming)||!incoming.length){toast('沒有可匯入的資料');return 0}
+  const idx={};
+  DB.records.forEach(r=>{idx[r.id||('ts'+r.ts)]=r});
+  let added=0,updated=0;
+  incoming.forEach(r=>{
+    if(!r||typeof r!=='object')return;
+    r.id=r.id||('ts'+(r.ts||Date.now()));
+    r.chips=r.chips||{};r.outs=r.outs||{};r.ext=r.ext||{};r.cust=r.cust||[];r.flags=r.flags||{};
+    const cur=idx[r.id];
+    if(!cur){DB.records.push(r);idx[r.id]=r;added++}
+    else if((r.upd||0)>(cur.upd||0)){Object.assign(cur,r);updated++}
+  });
+  save();renderStaffDL();renderMonthSel();renderList();renderSummary();
+  if(added||updated)toast((srcLabel?srcLabel+' ':'')+'新增 '+added+'、更新 '+updated+' 筆');
+  else toast('資料已是最新');
+  return added+updated;
+}
+function syncLink(){
+  const recs=(flt.staff||flt.month!=='all')?filtered():DB.records;
+  return location.origin+location.pathname+'#d='+encodeRecords(recs);
+}
+function applyHash(){
+  const h=location.hash||'';
+  if(h.indexOf('#d=')!==0)return false;
+  const recs=decodeRecords(h.slice(3));
+  if(recs&&recs.length){
+    mergeRecords(recs,'連結匯入');
+    try{history.replaceState(null,'',location.pathname+location.search)}catch(e){location.hash=''}
+    return true;
+  }
+  return false;
+}
+/* --- 雲端：Google Apps Script --- */
+function syncUrl(){return (localStorage.getItem(SYNCURL_KEY)||'').trim()}
+function setCloudState(msg){const el=$('#cloudState');if(el)el.textContent=msg}
+function jsonp(url,timeout){
+  return new Promise((resolve,reject)=>{
+    const cb='cbsync'+Math.random().toString(36).slice(2,10);
+    const el=document.createElement('script');
+    let done=false;
+    const cleanup=()=>{try{delete window[cb]}catch(e){window[cb]=undefined}el.remove()};
+    window[cb]=d=>{if(done)return;done=true;cleanup();resolve(d)};
+    el.onerror=()=>{if(done)return;done=true;cleanup();reject(new Error('連線失敗'))};
+    el.src=url+(url.indexOf('?')>=0?'&':'?')+'action=load&callback='+cb+'&_='+Date.now();
+    document.head.appendChild(el);
+    setTimeout(()=>{if(done)return;done=true;cleanup();reject(new Error('逾時'))},timeout||15000);
+  });
+}
+async function cloudDownload(){
+  const url=syncUrl();
+  if(!url){toast('請先貼上雲端網址');return 0}
+  setCloudState('下載中…');
+  try{
+    const res=await jsonp(url);
+    const data=res&&(res.data!==undefined?res.data:res);
+    let recs=null;
+    if(typeof data==='string')recs=decodeRecords(data);
+    else if(Array.isArray(data))recs=data;
+    else if(data&&Array.isArray(data.records))recs=data.records;
+    if(!recs||!recs.length){setCloudState('雲端尚無資料　'+clock());return 0}
+    const n=mergeRecords(recs,'雲端');
+    setCloudState('下載 '+recs.length+' 筆／合併 '+n+' 筆　'+clock());
+    return recs.length;
+  }catch(e){setCloudState('下載失敗：'+(e.message||'未知錯誤'));return 0}
+}
+async function cloudUpload(silent){
+  const url=syncUrl();
+  if(!url){if(!silent)toast('請先貼上雲端網址');return false}
+  try{
+    await fetch(url,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=utf-8'},
+      body:JSON.stringify({action:'save',data:JSON.stringify({v:1,updatedAt:Date.now(),records:DB.records})})});
+    setCloudState('已上傳 '+DB.records.length+' 筆　'+clock());
+    if(!silent)toast('已上傳雲端');
+    return true;
+  }catch(e){setCloudState('上傳失敗：'+(e.message||'未知錯誤'));if(!silent)toast('上傳失敗');return false}
+}
+async function cloudSync(){
+  await cloudDownload();
+  await cloudUpload(true);
+}
+function clock(){const d=new Date();return d.toLocaleTimeString('zh-TW',{hour:'2-digit',minute:'2-digit'})}
+function schedulePush(){
+  if(!syncUrl())return;
+  clearTimeout(pushTimer);
+  pushTimer=setTimeout(()=>{cloudUpload(true)},4000);
+}
+
 function init(){
   load();
   $('#staff').value=flt.staff||'';
   $('#verChip').textContent='v'+window.APP_VERSION;
   renderStaffDL();renderMonthSel();renderList();renderSummary();
+  applyHash();
+  if(syncUrl())setTimeout(()=>{cloudSync()},1500);
 
   $('#staff').addEventListener('input',e=>{
     flt.staff=e.target.value.trim();
@@ -798,6 +935,47 @@ function init(){
     }catch(err){}
     location.reload();
   };
+
+  /* ---- 同步 ---- */
+  const urlEl=$('#syncUrl');
+  if(urlEl){urlEl.value=syncUrl()}
+  setCloudState(syncUrl()?'已設定雲端網址':'尚未設定');
+  if(urlEl)urlEl.addEventListener('change',()=>{
+    localStorage.setItem(SYNCURL_KEY,urlEl.value.trim());
+    setCloudState(urlEl.value.trim()?'已設定，可按「立即同步」':'尚未設定');
+  });
+  const showLink=()=>{
+    const a=syncLink();
+    $('#linkOut').value=a;
+    $('#linkBox').classList.remove('hide');
+    return a;
+  };
+  $('#btnLink').onclick=showLink;
+  $('#btnCopyLink').onclick=async()=>{
+    const a=$('#linkOut').value||showLink();
+    try{await navigator.clipboard.writeText(a);toast('已複製，貼到 LINE 傳給自己')}
+    catch(e){$('#linkOut').select();toast('請長按連結複製')}
+  };
+  $('#btnShareLink').onclick=async()=>{
+    const a=$('#linkOut').value||showLink();
+    if(navigator.share){
+      try{await navigator.share({title:'獎金統計 資料同步',text:'點開匯入獎金統計資料',url:a})}catch(e){}
+    }else{try{await navigator.clipboard.writeText(a);toast('已複製連結')}catch(e){toast('請長按複製')}}
+  };
+  $('#btnPaste').onclick=async()=>{
+    let txt='';
+    try{txt=await navigator.clipboard.readText()}catch(e){}
+    if(!txt)txt=prompt('貼上同步連結：')||'';
+    const i=txt.indexOf('#d=');
+    if(i<0){toast('這不是同步連結');return}
+    const recs=decodeRecords(txt.slice(i+3).trim());
+    if(!recs){toast('連結已損毀，請重新產生');return}
+    mergeRecords(recs,'連結匯入');
+    $('#linkBox').classList.add('hide');
+  };
+  $('#btnCloudUp').onclick=()=>{if(!syncUrl()){toast('請先貼上雲端網址');return}cloudSync()};
+  $('#btnCloudDown').onclick=()=>{if(!syncUrl()){toast('請先貼上雲端網址');return}cloudDownload()};
+
   if('serviceWorker' in navigator)navigator.serviceWorker.register('sw.js').catch(()=>{});
 }
 document.addEventListener('DOMContentLoaded',init);
