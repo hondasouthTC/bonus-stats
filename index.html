@@ -155,6 +155,16 @@ main{padding:14px 16px 96px}
 .brow .tr i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#D8231A,#8E1109)}
 .brow .vl{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;color:var(--ink)}
 .brow.a .tr i{background:linear-gradient(90deg,#2E9C74,#0B7A55)}
+/* 配件平均表 */
+.accrow{display:grid;grid-template-columns:1fr 44px 82px 82px;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--line);font-size:12px}
+.accrow:last-child{border-bottom:0;padding-bottom:0}
+.accrow.hd{font-size:10.5px;color:var(--ink3);font-weight:600;padding-bottom:6px}
+.accrow .m{font-weight:700;color:var(--ink);font-variant-numeric:tabular-nums}
+.accrow .m.on{color:var(--red)}
+.accrow .n{text-align:right;color:var(--ink3);font-variant-numeric:tabular-nums}
+.accrow .t{text-align:right;color:var(--ink2);font-variant-numeric:tabular-nums}
+.accrow .a{text-align:right;font-weight:700;color:var(--blue);font-variant-numeric:tabular-nums}
+.accnote{font-size:10.5px;color:var(--ink3);margin-top:9px;line-height:1.5}
 .mrow{display:flex;align-items:flex-end;gap:6px;height:104px;padding-top:6px}
 .mcol{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:5px;height:100%}
 .mcol .b{width:100%;max-width:34px;border-radius:4px 4px 2px 2px;background:#DDD8CE;min-height:3px;transition:background .15s}
@@ -264,6 +274,7 @@ input:focus,select:focus{outline:none;border-color:var(--red);background:#fff;bo
       <div class="kpis" id="kpis"></div>
       <div class="sec" id="secModel"></div>
       <div class="sec" id="secStatus"></div>
+      <div class="sec" id="secAcc"></div>
       <div class="sec" id="secTrend"></div>
     </section>
   </main>
@@ -354,7 +365,7 @@ input:focus,select:focus{outline:none;border-color:var(--red);background:#fff;bo
 var LZString=function(){var r=String.fromCharCode,o="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=",n="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+-$",e={};function t(r,o){if(!e[r]){e[r]={};for(var n=0;n<r.length;n++)e[r][r.charAt(n)]=n}return e[r][o]}var i={compressToBase64:function(r){if(null==r)return"";var n=i._compress(r,6,function(r){return o.charAt(r)});switch(n.length%4){default:case 0:return n;case 1:return n+"===";case 2:return n+"==";case 3:return n+"="}},decompressFromBase64:function(r){return null==r?"":""==r?null:i._decompress(r.length,32,function(n){return t(o,r.charAt(n))})},compressToUTF16:function(o){return null==o?"":i._compress(o,15,function(o){return r(o+32)})+" "},decompressFromUTF16:function(r){return null==r?"":""==r?null:i._decompress(r.length,16384,function(o){return r.charCodeAt(o)-32})},compressToUint8Array:function(r){for(var o=i.compress(r),n=new Uint8Array(2*o.length),e=0,t=o.length;e<t;e++){var s=o.charCodeAt(e);n[2*e]=s>>>8,n[2*e+1]=s%256}return n},decompressFromUint8Array:function(o){if(null==o)return i.decompress(o);for(var n=new Array(o.length/2),e=0,t=n.length;e<t;e++)n[e]=256*o[2*e]+o[2*e+1];var s=[];return n.forEach(function(o){s.push(r(o))}),i.decompress(s.join(""))},compressToEncodedURIComponent:function(r){return null==r?"":i._compress(r,6,function(r){return n.charAt(r)})},decompressFromEncodedURIComponent:function(r){return null==r?"":""==r?null:(r=r.replace(/ /g,"+"),i._decompress(r.length,32,function(o){return t(n,r.charAt(o))}))},compress:function(o){return i._compress(o,16,function(o){return r(o)})},_compress:function(r,o,n){if(null==r)return"";var e,t,i,s={},u={},a="",p="",c="",l=2,f=3,h=2,d=[],m=0,v=0;for(i=0;i<r.length;i+=1)if(a=r.charAt(i),Object.prototype.hasOwnProperty.call(s,a)||(s[a]=f++,u[a]=!0),p=c+a,Object.prototype.hasOwnProperty.call(s,p))c=p;else{if(Object.prototype.hasOwnProperty.call(u,c)){if(c.charCodeAt(0)<256){for(e=0;e<h;e++)m<<=1,v==o-1?(v=0,d.push(n(m)),m=0):v++;for(t=c.charCodeAt(0),e=0;e<8;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}else{for(t=1,e=0;e<h;e++)m=m<<1|t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t=0;for(t=c.charCodeAt(0),e=0;e<16;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}0==--l&&(l=Math.pow(2,h),h++),delete u[c]}else for(t=s[c],e=0;e<h;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1;0==--l&&(l=Math.pow(2,h),h++),s[p]=f++,c=String(a)}if(""!==c){if(Object.prototype.hasOwnProperty.call(u,c)){if(c.charCodeAt(0)<256){for(e=0;e<h;e++)m<<=1,v==o-1?(v=0,d.push(n(m)),m=0):v++;for(t=c.charCodeAt(0),e=0;e<8;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}else{for(t=1,e=0;e<h;e++)m=m<<1|t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t=0;for(t=c.charCodeAt(0),e=0;e<16;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1}0==--l&&(l=Math.pow(2,h),h++),delete u[c]}else for(t=s[c],e=0;e<h;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1;0==--l&&(l=Math.pow(2,h),h++)}for(t=2,e=0;e<h;e++)m=m<<1|1&t,v==o-1?(v=0,d.push(n(m)),m=0):v++,t>>=1;for(;;){if(m<<=1,v==o-1){d.push(n(m));break}v++}return d.join("")},decompress:function(r){return null==r?"":""==r?null:i._decompress(r.length,32768,function(o){return r.charCodeAt(o)})},_decompress:function(o,n,e){var t,i,s,u,a,p,c,l=[],f=4,h=4,d=3,m="",v=[],g={val:e(0),position:n,index:1};for(t=0;t<3;t+=1)l[t]=t;for(s=0,a=Math.pow(2,2),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;switch(s){case 0:for(s=0,a=Math.pow(2,8),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;c=r(s);break;case 1:for(s=0,a=Math.pow(2,16),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;c=r(s);break;case 2:return""}for(l[3]=c,i=c,v.push(c);;){if(g.index>o)return"";for(s=0,a=Math.pow(2,d),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;switch(c=s){case 0:for(s=0,a=Math.pow(2,8),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;l[h++]=r(s),c=h-1,f--;break;case 1:for(s=0,a=Math.pow(2,16),p=1;p!=a;)u=g.val&g.position,g.position>>=1,0==g.position&&(g.position=n,g.val=e(g.index++)),s|=(u>0?1:0)*p,p<<=1;l[h++]=r(s),c=h-1,f--;break;case 2:return v.join("")}if(0==f&&(f=Math.pow(2,d),d++),l[c])m=l[c];else{if(c!==h)return null;m=i+i.charAt(0)}v.push(m),l[h++]=i+m.charAt(0),i=m,0==--f&&(f=Math.pow(2,d),d++)}}};return i}();"function"==typeof define&&define.amd?define(function(){return LZString}):"undefined"!=typeof module&&null!=module?module.exports=LZString:"undefined"!=typeof angular&&null!=angular&&angular.module("LZString",[]).factory("LZString",function(){return LZString});
 </script>
 <script>
-window.APP_VERSION = '1.3.2';
+window.APP_VERSION = '1.4.0';
 const KEY='hondaStats.v1', SKEY='hondaStats.staff';
 const MODELS=['HRV S','HRV ES','HRV EP','HRV 汽油','CRV VTIS','CRV S','CRV ES','CRV EP','FIT HOME','FIT eHEV','CIVIC','ZR-V','PRELUDE','其他'];
 const STATUSES=['訂車','已配','已領','已交','其他'];
@@ -489,19 +500,23 @@ function renderList(){
 /* ---------- summary ---------- */
 function renderSummary(){
   const list=filtered();
-  const agg={n:list.length,chips:0,outs:0,diff:0,ext:0,loan:0,body:0};
+  const agg={n:list.length,chips:0,outs:0,diff:0,ext:0,loan:0,body:0,accSum:0,accFilled:0};
   const byModel={},byStatus={},byMonth={};
   list.forEach(r=>{
     const c=calc(r);
     agg.chips+=c.chips;agg.outs+=c.outs;agg.diff+=c.diff;agg.ext+=c.ext;
     if(r.flags&&r.flags.loan)agg.loan++;
     if(r.flags&&r.flags.body)agg.body++;
+    const accV=num(r.acc);
+    if(accV){agg.accSum+=accV;agg.accFilled++;}
     const m=r.model||'未指定';
     byModel[m]=byModel[m]||{n:0,diff:0};byModel[m].n++;byModel[m].diff+=c.diff;
     const s=r.status||'—';
     byStatus[s]=byStatus[s]||{n:0,diff:0};byStatus[s].n++;byStatus[s].diff+=c.diff;
     const mo=r.month||'—';
-    byMonth[mo]=byMonth[mo]||{n:0,diff:0,chips:0};byMonth[mo].n++;byMonth[mo].diff+=c.diff;byMonth[mo].chips+=c.chips;
+    byMonth[mo]=byMonth[mo]||{n:0,diff:0,chips:0,accSum:0,accFilled:0};
+    byMonth[mo].n++;byMonth[mo].diff+=c.diff;byMonth[mo].chips+=c.chips;
+    if(accV){byMonth[mo].accSum+=accV;byMonth[mo].accFilled++;}
   });
   const avg=agg.n?agg.diff/agg.n:0;
   $('#kpis').innerHTML=`
@@ -509,6 +524,8 @@ function renderSummary(){
     <div class="kpi"><span>平均每台淨額</span><b class="${avg<0?'neg':(avg>0?'pos':'')}">${fmt(avg)}</b></div>
     <div class="kpi"><span>籌碼總計</span><b>${fmt(agg.chips)}</b></div>
     <div class="kpi"><span>支出總計</span><b>${fmt(agg.outs)}</b></div>
+    <div class="kpi"><span>配件單台平均</span><b style="color:var(--blue)">${fmt(agg.n?agg.accSum/agg.n:0)}</b><span style="margin:2px 0 0;font-size:10.5px;color:var(--ink3)">總額 ${fmt(agg.accSum)}</span></div>
+    <div class="kpi"><span>公司配件總額</span><b>${fmt(agg.accSum)}</b><span style="margin:2px 0 0;font-size:10.5px;color:var(--ink3)">${agg.accFilled} / ${agg.n} 台有填</span></div>
     <div class="kpi wide">
       <div><span>淨額（籌碼－支出）</span><b class="${agg.diff<0?'neg':(agg.diff>0?'pos':'')}" style="font-size:23px">${fmt(agg.diff)}</b></div>
       <div class="sub">業外合計<br><b style="font-size:15px;color:var(--ink)">${fmt(agg.ext)}</b></div>
@@ -527,6 +544,24 @@ function renderSummary(){
     const v=byStatus[s];
     return `<div class="brow a"><span class="lb">${esc(s)}</span><span class="tr"><i style="width:${Math.max(6,v.n/Math.max(...sk.map(x=>byStatus[x].n))*100)}%"></i></span><span class="vl" style="color:${v.diff<0?'var(--red)':'var(--green)'}">${fmt(v.diff)}</span></div>`;
   }).join(''):'<div class="note">尚無資料</div>');
+
+  // 公司配件：各月單台平均
+  const accRows=Object.entries(byMonth).sort((a,b)=>a[0]<b[0]?-1:1);
+  $('#secAcc').innerHTML='<h2>公司配件單台平均</h2>'+(agg.n?(
+    '<div class="accrow hd"><span>月份</span><span class="n">台數</span><span class="t">配件總額</span><span class="a">單台平均</span></div>'
+    +accRows.map(([k,v])=>{
+      const per=v.n?v.accSum/v.n:0;
+      return `<div class="accrow"><span class="m ${flt.month===k?'on':''}">${esc(k)}</span>`
+        +`<span class="n">${v.n}</span>`
+        +`<span class="t">${fmt(v.accSum)}</span>`
+        +`<span class="a">${fmt(per)}</span></div>`;
+    }).join('')
+    +`<div class="accrow" style="border-top:1px solid var(--line);margin-top:2px;padding-top:8px">`
+    +`<span class="m">${flt.month==='all'?'全部合計':'本月'}</span>`
+    +`<span class="n">${agg.n}</span><span class="t">${fmt(agg.accSum)}</span>`
+    +`<span class="a">${fmt(agg.n?agg.accSum/agg.n:0)}</span></div>`
+    +`<p class="accnote">單台平均 ＝ 配件總額 ÷ 成交台數。目前 ${agg.accFilled} 台有填寫配件金額${agg.accFilled?`，有填者平均 ${fmt(agg.accSum/agg.accFilled)}`:'（未填寫者以 0 計）'}。</p>`
+  ):'<div class="note">尚無資料</div>');
 
   const mon=Object.entries(byMonth).sort((a,b)=>a[0]<b[0]?-1:1);
   if(mon.length){
